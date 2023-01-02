@@ -1,9 +1,11 @@
+package shared;
+
 import java.io.Serializable;
 
 public class ComptePayant extends Compte implements Serializable {
 
     // Attributs
-    private final double TAUX_OPERATION = 5;
+    private final double TAUX_OPERATION = 5.0;
     public final String typeCompteP = "ComptePayant";
 
     // Constructors
@@ -24,20 +26,24 @@ public class ComptePayant extends Compte implements Serializable {
         super.retirer(mt + TAUX_OPERATION);
     }
 
-    public void deposer (double mt) {
+    public void deposer(double mt) {
         super.deposer(mt - TAUX_OPERATION);
     }
 
     // Getters and Setters
     public String getTypeCompteP() {
-        return typeCompteP;
+        return "ComptePayant";
     }
 
     @Override
     public String toString() {
         return "ComptePayant{" +
-                "solde=" + super.getSolde() +
-                ", code=" + super.getCode() +
+                "TAUX_OPERATION=" + TAUX_OPERATION +
+                ", pin='" + pin + '\'' +
+                ", code=" + code +
+                ", solde=" + solde +
+                ", operations=" + operations +
+                ", nbOperations=" + nbOperations +
                 '}';
     }
 }
