@@ -86,6 +86,10 @@ public class Agence implements Serializable {
         return this.nbClients;
     }
 
+    public ArrayList<Client> getLesClients() {
+        return lesClients;
+    }
+
     @Override
     public String toString() {
         return "Agence{" +

@@ -1,9 +1,4 @@
-import shared.Agence;
-import shared.Banque;
-import shared.Client;
-import shared.CompteEpargne;
-import shared.ComptePayant;
-import shared.Employe;
+import shared.*;
 import util.EndOfFile;
 
 import java.io.*;
@@ -68,9 +63,8 @@ public class Main {
 
         // Sérialisation
         try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("comptes.txt"))){
-            for(int i=0;i<LesClient.size();i++)
-            {
-                oos.writeObject(LesClient.get(i));
+            for(Client client : LesClient) {
+                oos.writeObject(client);
             }
             oos.writeObject(new EndOfFile());
         }catch (Exception e){
@@ -92,20 +86,24 @@ public class Main {
         }
 
         // Ajout des clients à leurs agences
-        for(int i = 0; i < LesClient.size(); ++i) {
-            if (LesClient.get(i).getAdresse().equals("Agadir")) {
-                agence1.addClient(LesClient.get(i));
-            } else if (LesClient.get(i).getAdresse().equals("Inezgane")) {
-                agence2.addClient(LesClient.get(i));
+
+        for(Client client : LesClient) {
+
+            if (client.getAdresse().equals("Agadir")) {
+                agence1.addClient(client);
+            } else if (client.getAdresse().equals("Inezgane")) {
+                agence2.addClient(client);
             }
+
         }
 
         // Application de la méthode calculInteret() sur tous les comptes d'épargne
-        for(int i = 0; i < Banque.getNbAgences(); ++i) {
-            for(int j = 0; j < banque.getAgence(i).getNbClients(); ++j) {
-                for(int k = 0; k < banque.getAgence(i).getClient(j).getNbCompte(); ++k) {
-                    if (banque.getAgence(i).getClient(j).getCompte(k) instanceof CompteEpargne) {
-                        ((CompteEpargne)banque.getAgence(i).getClient(j).getCompte(k)).calculInteret();
+
+        for(Agence agence : banque.getAgences()) {
+            for(Client client : agence.getLesClients()) {
+                for(Compte compte : client.getMesComptes()) {
+                    if (compte instanceof CompteEpargne) {
+                        ((CompteEpargne)compte).calculInteret();
                     }
                 }
             }
@@ -117,17 +115,17 @@ public class Main {
 
         System.out.println("--- Affichages des agences ---");
 
-        for(int i = 0; i < Banque.getNbAgences(); i ++) {
-            System.out.println(banque.getAgence(i).toString());
+        for(Agence agence : banque.getAgences()) {
+            System.out.println(agence.toString());
         }
 
         // Liste des différents clients avec leurs différents comptes
 
         System.out.println("\n--- Liste des differents clients avec leurs differents comptes ---");
 
-        for(int i = 0; i < Banque.getNbAgences(); ++i) {
-            for(int j = 0; j < banque.getAgence(i).getNbClients(); ++j) {
-                System.out.println(banque.getAgence(i).getClient(j).toString());
+        for(Agence agence : banque.getAgences()) {
+            for(Client client : agence.getLesClients()) {
+                System.out.println(client.toString());
             }
         }
 
@@ -135,11 +133,11 @@ public class Main {
 
         System.out.println("\n--- Liste des comptes d'epargne de l'agence ---");
 
-        for(int i = 0; i < Banque.getNbAgences(); ++i) {
-            for(int j = 0; j < banque.getAgence(i).getNbClients(); ++j) {
-                for(int k = 0; k < banque.getAgence(i).getClient(j).getNbCompte(); ++k) {
-                    if (banque.getAgence(i).getClient(j).getCompte(k) instanceof CompteEpargne) {
-                        System.out.println(banque.getAgence(i).getClient(j).getCompte(k).toString());
+        for(Agence agence : banque.getAgences()) {
+            for(Client client : agence.getLesClients()) {
+                for(Compte compte : client.getMesComptes()) {
+                    if (compte instanceof CompteEpargne) {
+                        System.out.println(compte.toString());
                     }
                 }
             }
@@ -149,11 +147,11 @@ public class Main {
 
         System.out.println("\n--- Liste des comptes payants de l'agence ---");
 
-        for(int i = 0; i < Banque.getNbAgences(); ++i) {
-            for(int j = 0; j < banque.getAgence(i).getNbClients(); ++j) {
-                for(int k = 0; k < banque.getAgence(i).getClient(j).getNbCompte(); ++k) {
-                    if (banque.getAgence(i).getClient(j).getCompte(k) instanceof ComptePayant) {
-                        System.out.println(banque.getAgence(i).getClient(j).getCompte(k).toString());
+        for(Agence agence : banque.getAgences()) {
+            for(Client client : agence.getLesClients()) {
+                for(Compte compte : client.getMesComptes()) {
+                    if (compte instanceof ComptePayant) {
+                        System.out.println(compte.toString());
                     }
                 }
             }

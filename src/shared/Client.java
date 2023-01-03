@@ -99,6 +99,10 @@ public class Client implements Serializable {
         this.conseiller = conseiller;
     }
 
+    public ArrayList<Compte> getMesComptes() {
+        return mesComptes;
+    }
+
     @Override
     public String toString() {
         return "Client{" +

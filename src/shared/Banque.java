@@ -1,24 +1,25 @@
 package shared;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Banque {
     public static final int NB_MAX_AGENCES = 50;
     private String nom;
     private double capitalGlobal;
     private String siegeSocial;
-    private Agence[] agences;
+    private ArrayList<Agence> agences;
     private static int nbAgences = 0;
 
     public Banque(String nom, double capitalGlobal, String siegeSocial) {
         this.nom = nom;
         this.capitalGlobal = capitalGlobal;
         this.siegeSocial = siegeSocial;
-        this.agences = new Agence[50];
+        this.agences = new ArrayList<Agence>();
     }
 
     public void addAgence(Agence a) {
         if (nbAgences < 50) {
-            this.agences[nbAgences++] = a;
+            this.agences.add(a);
+            nbAgences++;
         } else {
             System.out.println("Vous avez atteindre le nombre max du agences que vous pouvez avoir");
         }
@@ -54,7 +55,11 @@ public class Banque {
     }
 
     public Agence getAgence(int n) {
-        return this.agences[n];
+        return this.agences.get(n);
+    }
+
+    public ArrayList<Agence> getAgences() {
+        return agences;
     }
 
     @Override
@@ -63,7 +68,7 @@ public class Banque {
                 "nom='" + nom + '\'' +
                 ", capitalGlobal=" + capitalGlobal +
                 ", siegeSocial='" + siegeSocial + '\'' +
-                ", agences=" + Arrays.toString(agences) +
+                ", agences=" + agences +
                 '}';
     }
 }
